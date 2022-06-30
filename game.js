@@ -42,6 +42,8 @@ var gameInterval;
 // Determines whether to change the direction of the player or not 
 // The player move every 100 milliseocnds, therefore the player can only change direction once every 100 milliseonds
 var changeDirection
+// check if the game has started or not
+var gameStarted
 // Horizontal velocity of player
 var dx = squareWidth;
 // Vertical velocity of player
@@ -63,6 +65,8 @@ window.onload=startCanvas
 
 // This function is the starting screen of the game
 function startCanvas(){
+    //game hasn't started
+    gameStarted = false
     // Return a two dimensional drawing context
     ctx=document.getElementById("myCanvas").getContext("2d")
 
@@ -91,14 +95,19 @@ function startCanvas(){
     // Once click on the starting the screen, the game starts
     window.addEventListener('click', onClick);
     function onClick(){
-        updateCanvas()
+        if (gameStarted == false){
+        StartGame()
+        }
     }
 }
 
 
 
 // This function changeDirections the games 
-function updateCanvas(){
+function StartGame(){ 
+    //game started so function onClick() will not work
+    gameStarted = true
+    console.log("game started")
     // Get the positon of the paint 
     CorrectPaintPosition()
     WrongPaintPosition()
@@ -127,7 +136,7 @@ function gameEnd(){
     console.log("Game Over")
     
     // Inform the user that the game has ended, and instruction on how to restart
-    ctx.font = "90px comic "
+    ctx.font = "90px comic"
     ctx.fillStyle = "black"
     ctx.textAlign = 'center';
     ctx.fillText("Game Over", WIDTH/2, HEIGHT*2/5);
@@ -160,9 +169,9 @@ function randowPaintPosition(min, max){
 function CorrectPaintPosition() {
     // Gets the position for the correct-paint
     correctPaintX = randowPaintPosition(0, WIDTH - squareWidth);
-    console.log(correctPaintX)
+    console.log("correct-paint x position:", correctPaintX)
     correctPaintY = randowPaintPosition(0, HEIGHT - squareWidth);
-    console.log(correctPaintY)
+    console.log("correct-paint y position:", correctPaintY)
 
     // Make sure that the correct-paint position is not on the player
     player.forEach(function food_on_player (part) {
@@ -179,9 +188,9 @@ function CorrectPaintPosition() {
 function WrongPaintPosition() {
     // Gets the position for the wrong-paint
     wrongPaintX = randowPaintPosition(0, WIDTH - squareWidth);
-    console.log(wrongPaintX)
+    console.log("wong-paint x poisition:", wrongPaintX)
     wrongPaintY = randowPaintPosition(0, HEIGHT - squareWidth);
-    console.log(wrongPaintY)
+    console.log("wong-paint y poisition:", wrongPaintY)
 
     // Make sure that the wrong-paint position is not on the player
     player.forEach(function food_on_player (part) {
@@ -192,7 +201,7 @@ function WrongPaintPosition() {
 
     // Make sure that the wrong-paint position is not too close to the player, so that the user is capable of avoiding it
     if ((Math.abs(player[0].x - wrongPaintX) < squareWidth*5 ) || (Math.abs(player[0].y - wrongPaintY) < squareWidth*5)) {
-        console.log("too close")
+        console.log("wrong-paint too close to player")
         WrongPaintPosition()
     }
 
