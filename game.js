@@ -2,7 +2,7 @@
 * Title: Game design
 * Author: Charlie Chen
 * Date: 08/07/2022
-* Purpose: Design game
+* Purpose: Design a game
 **/
 
 
@@ -351,4 +351,3 @@ function has_game_ended() {
         return true
     }
 }
-
