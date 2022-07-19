@@ -1,8 +1,9 @@
 /**
-* Title: Game design
+* Title: Painter
 * Author: Charlie Chen
-* Date: 08/07/2022
+* Date: 29/07/2022
 * Purpose: Design a game
+* Reference: https://www.educative.io/blog/javascript-snake-game-tutorial
 **/
 
 
@@ -80,7 +81,7 @@ function startCanvas(){
     ctx.fillText("Use wsad keys or arrows keys to move", WIDTH/2, HEIGHT*7/10);
 
     ctx.font = "70px comic"
-    ctx.fillText("Click Anywhere to Start Game", WIDTH/2, HEIGHT*6/10);
+    ctx.fillText("Click Anywhere to Start", WIDTH/2, HEIGHT*6/10);
 
 
     ctx.fillStyle = GAMECOLOUR["correctPaintColour"];
