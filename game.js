@@ -21,8 +21,8 @@ const GAMECOLOUR = {
     "playerBorderColour": "#000000", 
     "correctPaintColour": "#0000FF", 
     "correctPaintBorderColour":"#000000",
-    "wrongPaintColour": "#7DF9FF", 
-    "wrongPaintBorderColour":"#000000"
+    "obsticlePaintColour": "#7DF9FF", 
+    "obsticlePaintBorderColour":"#000000"
 }
 
 // Some variables that will be needed
@@ -53,10 +53,10 @@ var dy = 0;
 var correctPaintX;
 // correct-paint y position 
 var correctPaintY;
-// wrong-paint x position 
-var wrongPaintX;
-// wrong-paint y position 
-var wrongPaintY;
+// obsticle-paint x position 
+var obsticlePaintX;
+// obsticle-paint y position 
+var obsticlePaintY;
 
 
 // When content loads changeDirection the function startCanvas
@@ -88,8 +88,8 @@ function startCanvas(){
     ctx.strokestyle = GAMECOLOUR["correctPaintBorderColour"];
     ctx.fillRect(940, 210, squareWidth, squareWidth);
     ctx.strokeRect(940, 210, squareWidth, squareWidth);
-    ctx.fillStyle = GAMECOLOUR["wrongPaintColour"];
-    ctx.strokestyle = GAMECOLOUR["wrongPaintBorderColour"];
+    ctx.fillStyle = GAMECOLOUR["obsticlePaintColour"];
+    ctx.strokestyle = GAMECOLOUR["obsticlePaintBorderColour"];
     ctx.fillRect(720, 290, squareWidth, squareWidth);
     ctx.strokeRect(720, 290, squareWidth, squareWidth);
 
@@ -111,7 +111,7 @@ function StartGame(){
     console.log("game started")
     // Get the positon of the paint 
     CorrectPaintPosition()
-    WrongPaintPosition()
+    obsticlePaintPosition()
 
     // changeDirections the game by making the snake move every 100 milliseconds, and constantly check if it is dying 
     gameInterval = setInterval(()=> {
@@ -185,30 +185,30 @@ function CorrectPaintPosition() {
 
 
 
-// This function gets the position for the wrong-paint
-function WrongPaintPosition() {
-    // Gets the position for the wrong-paint
-    wrongPaintX = randowPaintPosition(0, WIDTH - squareWidth);
-    console.log("wong-paint x poisition:", wrongPaintX)
-    wrongPaintY = randowPaintPosition(0, HEIGHT - squareWidth);
-    console.log("wong-paint y poisition:", wrongPaintY)
+// This function gets the position for the obsticle-paint
+function obsticlePaintPosition() {
+    // Gets the position for the obsticle-paint
+    obsticlePaintX = randowPaintPosition(0, WIDTH - squareWidth);
+    console.log("obsticle-paint x poisition:", obsticlePaintX)
+    obsticlePaintY = randowPaintPosition(0, HEIGHT - squareWidth);
+    console.log("obsticle-paint y poisition:", obsticlePaintY)
 
-    // Make sure that the wrong-paint position is not on the player
+    // Make sure that the obsticle-paint position is not on the player
     player.forEach(function food_on_player (part) {
-        if ((part.x == wrongPaintX) && (part.y == wrongPaintY)) {
-           WrongPaintPosition()
+        if ((part.x == obsticlePaintX) && (part.y == obsticlePaintY)) {
+           obsticlePaintPosition()
         }
     });
 
-    // Make sure that the wrong-paint position is not too close to the player, so that the user is capable of avoiding it
-    if ((Math.abs(player[0].x - wrongPaintX) < squareWidth*5 ) || (Math.abs(player[0].y - wrongPaintY) < squareWidth*5)) {
-        console.log("wrong-paint too close to player")
-        WrongPaintPosition()
+    // Make sure that the obsticle-paint position is not too close to the player, so that the user is capable of avoiding it
+    if ((Math.abs(player[0].x - obsticlePaintX) < squareWidth*5 ) || (Math.abs(player[0].y - obsticlePaintY) < squareWidth*5)) {
+        console.log("obsticle-paint too close to player")
+        obsticlePaintPosition()
     }
 
-    // Make sure that the wrong-paint position is not the same as the correct-paint position
-    if ((wrongPaintX == correctPaintX) && (wrongPaintY == correctPaintY)){
-        WrongPaintPosition()
+    // Make sure that the obsticle-paint position is not the same as the correct-paint position
+    if ((obsticlePaintX == correctPaintX) && (obsticlePaintY == correctPaintY)){
+        obsticlePaintPosition()
     }
 }
 
@@ -220,10 +220,10 @@ function drawPaint() {
     ctx.strokestyle = GAMECOLOUR["correctPaintBorderColour"];
     ctx.fillRect(correctPaintX, correctPaintY, squareWidth, squareWidth);
     ctx.strokeRect(correctPaintX, correctPaintY, squareWidth, squareWidth);
-    ctx.fillStyle = GAMECOLOUR["wrongPaintColour"];
-    ctx.strokestyle = GAMECOLOUR["wrongPaintBorderColour"];
-    ctx.fillRect(wrongPaintX, wrongPaintY, squareWidth, squareWidth);
-    ctx.strokeRect(wrongPaintX, wrongPaintY, squareWidth, squareWidth);
+    ctx.fillStyle = GAMECOLOUR["obsticlePaintColour"];
+    ctx.strokestyle = GAMECOLOUR["obsticlePaintBorderColour"];
+    ctx.fillRect(obsticlePaintX, obsticlePaintY, squareWidth, squareWidth);
+    ctx.strokeRect(obsticlePaintX, obsticlePaintY, squareWidth, squareWidth);
 }
 
 
@@ -302,13 +302,13 @@ function move_player() {
     const getCorrectPaint = (player[0].x == correctPaintX) && (player[0].y == correctPaintY);
 
     if (getCorrectPaint) {
-        // If correct-paint has being captured: increase the score, generate new postion for correct-paint and wrong-paint
+        // If correct-paint has being captured: increase the score, generate new postion for correct-paint and obsticle-paint
         // Also we don't remove the last sqaure of the player to increase the length of the player (added the new head)
         score += 1;
         document.getElementById('score').innerHTML = "Score: " + score;
 
         CorrectPaintPosition();
-        WrongPaintPosition();
+        obsticlePaintPosition();
     } else {
         // if correct-paint hasn't being captured we remove the last square of the player so that the player stay the same length
         player.pop();
@@ -347,8 +347,8 @@ function has_game_ended() {
         return true
     }
     // Detects if the player ate the poison food
-    if ((player[0].x == wrongPaintX) && (player[0].y == wrongPaintY)){
-		console.log("wrong-paint")
+    if ((player[0].x == obsticlePaintX) && (player[0].y == obsticlePaintY)){
+		console.log("obsticle-paint")
         return true
     }
 }
