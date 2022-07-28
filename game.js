@@ -113,7 +113,7 @@ function StartGame(){
     CorrectPaintPosition()
     obsticlePaintPosition()
 
-    // changeDirections the game by making the snake move every 100 milliseconds, and antly check if it is dying 
+    //Move the player every 100 milliseconds by running those functions, and constantly check if it is dying 
     gameInterval = setInterval(()=> {
         if(has_game_ended() == true){
             gameEnd();
@@ -131,7 +131,7 @@ function StartGame(){
 
 // This function is the ending screen of the game
 function gameEnd(){
-    // Stop the game from changeDirectionning
+    // Stop the game from moving
     clearCanvas(); 
     clearInterval(gameInterval)
     console.log("Game Over")
@@ -214,7 +214,7 @@ function obsticlePaintPosition() {
 
 
 
-// This function draws the paint on the canvas
+// This function draws the paint sqaures on the canvas
 function drawPaint() {
     ctx.fillStyle = GAME_COLOUR["correctPaintColour"];
     ctx.strokestyle = GAME_COLOUR["correctPaintBorderColour"];
@@ -234,14 +234,12 @@ function drawPlayer(){
 }
 // This function draws each part of the player
 function drawPlayerPart(part){
-    // Set the colour of the player part
+    // Sets the colour of the player
     ctx.fillStyle = GAME_COLOUR["playerColour"];
-    // Set the border colour of the player part
     ctx.strokestyle = GAME_COLOUR["playerBorderColour"];
-    // Draw a "filled" rectangle to represent the player part at the coordinates
-    // The part is located
+
+    // Draws the player
     ctx.fillRect(part.x, part.y, SQAURE_WIDTH, SQAURE_WIDTH);
-    // Draw a border around the player part
     ctx.strokeRect(part.x, part.y, SQAURE_WIDTH, SQAURE_WIDTH);
 }
 
@@ -251,8 +249,8 @@ function drawPlayerPart(part){
 window.addEventListener('keydown', keyDownFunction)
 // This function changes the direction of the player 
 function keyDownFunction(event) {
+    // The keyDownfunction can only run once every 100milliseconds
     if (changeDirection == true) {
-    // Get the key
     var keyDown = event.key
 
     // Prevent the player from reversing
@@ -265,7 +263,7 @@ function keyDownFunction(event) {
     if ((keyDown === "ArrowLeft" || keyDown === "a") && !GOING_RIGHT) {
         dx = -SQAURE_WIDTH
         dy = 0
-        // Prevent the player from changing the direction again before the player changed the direction on the canvas
+        // Prevent the player from changing the direction again within the 100milliseconds, so that movement of the player is updated on the canvas
         changeDirection = false
     }
     if ((keyDown === "ArrowUp" || keyDown === "w") && !GOING_DOWN) {
