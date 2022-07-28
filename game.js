@@ -14,25 +14,25 @@ const WIDTH = 1000;
 // Width of the canvas
 const HEIGHT = 800;
 // SqaureWidth is the size of the square (40px * 4px) that the canvas is divided to (25squares * 20squares)
-const SQAURE_WIDTH = 40
+const SQUARE_WIDTH = 40
 // Objects with all the colour thar we can access from
 const GAME_COLOUR = {
     "playerColour": "#0000FF", 
     "playerBorderColour": "#000000", 
     "correctPaintColour": "#0000FF", 
     "correctPaintBorderColour":"#000000",
-    "obsticlePaintColour": "#7DF9FF", 
-    "obsticlePaintBorderColour":"#000000"
+    "obstaclePaintColour": "#7DF9FF", 
+    "obstaclePaintBorderColour":"#000000"
 }
 
 // Some variables that will be needed
 // The coordinates of the player on the canvas
 var player = [
-    {x: SQAURE_WIDTH * 5, y: SQAURE_WIDTH * 3},
-    {x: SQAURE_WIDTH * 4, y: SQAURE_WIDTH * 3},
-    {x: SQAURE_WIDTH * 3, y: SQAURE_WIDTH * 3},
-    {x: SQAURE_WIDTH * 3, y: SQAURE_WIDTH * 3},
-    {x: SQAURE_WIDTH * 2, y: SQAURE_WIDTH * 3}
+    {x: SQUARE_WIDTH * 5, y: SQUARE_WIDTH * 3},
+    {x: SQUARE_WIDTH * 4, y: SQUARE_WIDTH * 3},
+    {x: SQUARE_WIDTH * 3, y: SQUARE_WIDTH * 3},
+    {x: SQUARE_WIDTH * 3, y: SQUARE_WIDTH * 3},
+    {x: SQUARE_WIDTH * 2, y: SQUARE_WIDTH * 3}
 ]
 // The canvas rendering context
 var ctx
@@ -46,17 +46,17 @@ var changeDirection
 // check if the game has started or not
 var gameStarted
 // Horizontal velocity of player
-var dx = SQAURE_WIDTH;
+var dx = SQUARE_WIDTH;
 // Vertical velocity of player
 var dy = 0;
 // correct-paint x position 
 var correctPaintX;
 // correct-paint y position 
 var correctPaintY;
-// obsticle-paint x position 
-var obsticlePaintX;
-// obsticle-paint y position 
-var obsticlePaintY;
+// obstacle-paint x position 
+var obstaclePaintX;
+// obstacle-paint y position 
+var obstaclePaintY;
 
 
 // When content loads changeDirection the function startCanvas
@@ -86,12 +86,12 @@ function startCanvas(){
 
     ctx.fillStyle = GAME_COLOUR["correctPaintColour"];
     ctx.strokestyle = GAME_COLOUR["correctPaintBorderColour"];
-    ctx.fillRect(940, 210, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.strokeRect(940, 210, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.fillStyle = GAME_COLOUR["obsticlePaintColour"];
-    ctx.strokestyle = GAME_COLOUR["obsticlePaintBorderColour"];
-    ctx.fillRect(720, 290, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.strokeRect(720, 290, SQAURE_WIDTH, SQAURE_WIDTH);
+    ctx.fillRect(940, 210, SQUARE_WIDTH, SQUARE_WIDTH);
+    ctx.strokeRect(940, 210, SQUARE_WIDTH, SQUARE_WIDTH);
+    ctx.fillStyle = GAME_COLOUR["obstaclePaintColour"];
+    ctx.strokestyle = GAME_COLOUR["obstaclePaintBorderColour"];
+    ctx.fillRect(720, 290, SQUARE_WIDTH, SQUARE_WIDTH);
+    ctx.strokeRect(720, 290, SQUARE_WIDTH, SQUARE_WIDTH);
 
     // Once click on the starting the screen, the game starts
     window.addEventListener('click', onClick);
@@ -111,7 +111,7 @@ function StartGame(){
     console.log("game started")
     // Get the positon of the paint 
     CorrectPaintPosition()
-    obsticlePaintPosition()
+    obstaclePaintPosition()
 
     //Move the player every 100 milliseconds by running those functions, and constantly check if it is dying 
     gameInterval = setInterval(()=> {
@@ -161,7 +161,7 @@ function clearCanvas() {
 
 // Run this function get a random sqaure position on the canvas
 function randowPaintPosition(min, max){  
-    return Math.round(Math.random() * ((max - min)/ SQAURE_WIDTH)) * SQAURE_WIDTH;
+    return Math.round(Math.random() * ((max - min)/ SQUARE_WIDTH)) * SQUARE_WIDTH;
 }
 
 
@@ -169,9 +169,9 @@ function randowPaintPosition(min, max){
 // This function gets the position for the correct-paint
 function CorrectPaintPosition() {
     // Gets the position for the correct-paint
-    correctPaintX = randowPaintPosition(0, WIDTH - SQAURE_WIDTH);
+    correctPaintX = randowPaintPosition(0, WIDTH - SQUARE_WIDTH);
     console.log("correct-paint x position:", correctPaintX)
-    correctPaintY = randowPaintPosition(0, HEIGHT - SQAURE_WIDTH);
+    correctPaintY = randowPaintPosition(0, HEIGHT - SQUARE_WIDTH);
     console.log("correct-paint y position:", correctPaintY)
 
     // Make sure that the correct-paint position is not on the player
@@ -185,30 +185,30 @@ function CorrectPaintPosition() {
 
 
 
-// This function gets the position for the obsticle-paint
-function obsticlePaintPosition() {
-    // Gets the position for the obsticle-paint
-    obsticlePaintX = randowPaintPosition(0, WIDTH - SQAURE_WIDTH);
-    console.log("obsticle-paint x poisition:", obsticlePaintX)
-    obsticlePaintY = randowPaintPosition(0, HEIGHT - SQAURE_WIDTH);
-    console.log("obsticle-paint y poisition:", obsticlePaintY)
+// This function gets the position for the obstacle-paint
+function obstaclePaintPosition() {
+    // Gets the position for the obstacle-paint
+    obstaclePaintX = randowPaintPosition(0, WIDTH - SQUARE_WIDTH);
+    console.log("obstacle-paint x poisition:", obstaclePaintX)
+    obstaclePaintY = randowPaintPosition(0, HEIGHT - SQUARE_WIDTH);
+    console.log("obstacle-paint y poisition:", obstaclePaintY)
 
-    // Make sure that the obsticle-paint position is not on the player
+    // Make sure that the obstacle-paint position is not on the player
     player.forEach(function food_ON_PLAYER (part) {
-        if ((part.x == obsticlePaintX) && (part.y == obsticlePaintY)) {
-           obsticlePaintPosition()
+        if ((part.x == obstaclePaintX) && (part.y == obstaclePaintY)) {
+           obstaclePaintPosition()
         }
     });
 
-    // Make sure that the obsticle-paint position is not too close to the player, so that the user is capable of avoiding it
-    if ((Math.abs(player[0].x - obsticlePaintX) < SQAURE_WIDTH*5 ) || (Math.abs(player[0].y - obsticlePaintY) < SQAURE_WIDTH*5)) {
-        console.log("obsticle-paint too close to player")
-        obsticlePaintPosition()
+    // Make sure that the obstacle-paint position is not too close to the player, so that the user is capable of avoiding it
+    if ((Math.abs(player[0].x - obstaclePaintX) < SQUARE_WIDTH*5 ) || (Math.abs(player[0].y - obstaclePaintY) < SQUARE_WIDTH*5)) {
+        console.log("obstacle-paint too close to player")
+        obstaclePaintPosition()
     }
 
-    // Make sure that the obsticle-paint position is not the same as the correct-paint position
-    if ((obsticlePaintX == correctPaintX) && (obsticlePaintY == correctPaintY)){
-        obsticlePaintPosition()
+    // Make sure that the obstacle-paint position is not the same as the correct-paint position
+    if ((obstaclePaintX == correctPaintX) && (obstaclePaintY == correctPaintY)){
+        obstaclePaintPosition()
     }
 }
 
@@ -218,12 +218,12 @@ function obsticlePaintPosition() {
 function drawPaint() {
     ctx.fillStyle = GAME_COLOUR["correctPaintColour"];
     ctx.strokestyle = GAME_COLOUR["correctPaintBorderColour"];
-    ctx.fillRect(correctPaintX, correctPaintY, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.strokeRect(correctPaintX, correctPaintY, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.fillStyle = GAME_COLOUR["obsticlePaintColour"];
-    ctx.strokestyle = GAME_COLOUR["obsticlePaintBorderColour"];
-    ctx.fillRect(obsticlePaintX, obsticlePaintY, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.strokeRect(obsticlePaintX, obsticlePaintY, SQAURE_WIDTH, SQAURE_WIDTH);
+    ctx.fillRect(correctPaintX, correctPaintY, SQUARE_WIDTH, SQUARE_WIDTH);
+    ctx.strokeRect(correctPaintX, correctPaintY, SQUARE_WIDTH, SQUARE_WIDTH);
+    ctx.fillStyle = GAME_COLOUR["obstaclePaintColour"];
+    ctx.strokestyle = GAME_COLOUR["obstaclePaintBorderColour"];
+    ctx.fillRect(obstaclePaintX, obstaclePaintY, SQUARE_WIDTH, SQUARE_WIDTH);
+    ctx.strokeRect(obstaclePaintX, obstaclePaintY, SQUARE_WIDTH, SQUARE_WIDTH);
 }
 
 
@@ -239,8 +239,8 @@ function drawPlayerPart(part){
     ctx.strokestyle = GAME_COLOUR["playerBorderColour"];
 
     // Draws the player
-    ctx.fillRect(part.x, part.y, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.strokeRect(part.x, part.y, SQAURE_WIDTH, SQAURE_WIDTH);
+    ctx.fillRect(part.x, part.y, SQUARE_WIDTH, SQUARE_WIDTH);
+    ctx.strokeRect(part.x, part.y, SQUARE_WIDTH, SQUARE_WIDTH);
 }
 
 
@@ -254,32 +254,32 @@ function keyDownFunction(event) {
     var keyDown = event.key
 
     // Prevent the player from reversing
-    const GOING_UP = dy === -SQAURE_WIDTH
-    const GOING_DOWN = dy === SQAURE_WIDTH
-    const GOING_RIGHT = dx === SQAURE_WIDTH
-    const GOING_LEFT = dx === -SQAURE_WIDTH
+    const GOING_UP = dy === -SQUARE_WIDTH
+    const GOING_DOWN = dy === SQUARE_WIDTH
+    const GOING_RIGHT = dx === SQUARE_WIDTH
+    const GOING_LEFT = dx === -SQUARE_WIDTH
 
     // Change the direction 
     if ((keyDown === "ArrowLeft" || keyDown === "a") && !GOING_RIGHT) {
-        dx = -SQAURE_WIDTH
+        dx = -SQUARE_WIDTH
         dy = 0
         // Prevent the player from changing the direction again within the 100milliseconds, so that movement of the player is updated on the canvas
         changeDirection = false
     }
     if ((keyDown === "ArrowUp" || keyDown === "w") && !GOING_DOWN) {
         dx = 0
-        dy = -SQAURE_WIDTH
+        dy = -SQUARE_WIDTH
         changeDirection = false
     }
     if ((keyDown === "ArrowRight" || keyDown === "d") && !GOING_LEFT){
-        dx = SQAURE_WIDTH
+        dx = SQUARE_WIDTH
         dy = 0
 
         changeDirection = false
     }
     if ((keyDown === "ArrowDown" || keyDown === "s") && !GOING_UP) {
         dx = 0
-        dy = SQAURE_WIDTH
+        dy = SQUARE_WIDTH
         changeDirection = false
     }
     }
@@ -298,13 +298,13 @@ function move_player() {
     const GET_CORRECT_PAINT = (player[0].x == correctPaintX) && (player[0].y == correctPaintY);
 
     if (GET_CORRECT_PAINT) {
-        // If correct-paint has being captured: increase the score, generate new postion for correct-paint and obsticle-paint
+        // If correct-paint has being captured: increase the score, generate new postion for correct-paint and obstacle-paint
         // Also we don't remove the last sqaure of the player to increase the length of the player (added the new head)
         score += 1;
         document.getElementById('score').innerHTML = "Score: " + score;
 
         CorrectPaintPosition();
-        obsticlePaintPosition();
+        obstaclePaintPosition();
     } else {
         // if correct-paint hasn't being captured we remove the last square of the player so that the player stay the same length
         player.pop();
@@ -328,7 +328,7 @@ function has_game_ended() {
     	return true
     } 
     // Detects if the pplayer hit the right wall
-    if (player[0].x + SQAURE_WIDTH > WIDTH) {
+    if (player[0].x + SQUARE_WIDTH > WIDTH) {
 		console.log("hit right wall")
         return true
     }
@@ -338,13 +338,13 @@ function has_game_ended() {
         return true
     }
     // Detects if the player hit the bottom wall
-    if (player[0].y + SQAURE_WIDTH > HEIGHT) {
+    if (player[0].y + SQUARE_WIDTH > HEIGHT) {
 		console.log("hit bottom wall")
         return true
     }
     // Detects if the player ate the poison food
-    if ((player[0].x == obsticlePaintX) && (player[0].y == obsticlePaintY)){
-		console.log("obsticle-paint")
+    if ((player[0].x == obstaclePaintX) && (player[0].y == obstaclePaintY)){
+		console.log("obstacle-paint")
         return true
     }
 }
