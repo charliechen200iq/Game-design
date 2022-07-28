@@ -16,7 +16,7 @@ const HEIGHT = 800;
 // SqaureWidth is the size of the square (40px * 4px) that the canvas is divided to (25squares * 20squares)
 const SQAURE_WIDTH = 40
 // Objects with all the colour thar we can access from
-const GAMECOLOUR = {
+const GAME_COLOUR = {
     "playerColour": "#0000FF", 
     "playerBorderColour": "#000000", 
     "correctPaintColour": "#0000FF", 
@@ -84,12 +84,12 @@ function startCanvas(){
     ctx.fillText("Click Anywhere to Start", WIDTH/2, HEIGHT*6/10);
 
 
-    ctx.fillStyle = GAMECOLOUR["correctPaintColour"];
-    ctx.strokestyle = GAMECOLOUR["correctPaintBorderColour"];
+    ctx.fillStyle = GAME_COLOUR["correctPaintColour"];
+    ctx.strokestyle = GAME_COLOUR["correctPaintBorderColour"];
     ctx.fillRect(940, 210, SQAURE_WIDTH, SQAURE_WIDTH);
     ctx.strokeRect(940, 210, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.fillStyle = GAMECOLOUR["obsticlePaintColour"];
-    ctx.strokestyle = GAMECOLOUR["obsticlePaintBorderColour"];
+    ctx.fillStyle = GAME_COLOUR["obsticlePaintColour"];
+    ctx.strokestyle = GAME_COLOUR["obsticlePaintBorderColour"];
     ctx.fillRect(720, 290, SQAURE_WIDTH, SQAURE_WIDTH);
     ctx.strokeRect(720, 290, SQAURE_WIDTH, SQAURE_WIDTH);
 
@@ -113,7 +113,7 @@ function StartGame(){
     CorrectPaintPosition()
     obsticlePaintPosition()
 
-    // changeDirections the game by making the snake move every 100 milliseconds, and constantly check if it is dying 
+    // changeDirections the game by making the snake move every 100 milliseconds, and antly check if it is dying 
     gameInterval = setInterval(()=> {
         if(has_game_ended() == true){
             gameEnd();
@@ -176,7 +176,7 @@ function CorrectPaintPosition() {
 
     // Make sure that the correct-paint position is not on the player
     player.forEach(function food_ON_PLAYER (part) {
-        const ON_PLAYER = (part.x == correctPaintX) && (part.y == correctPaintY)
+         ON_PLAYER = (part.x == correctPaintX) && (part.y == correctPaintY)
         if (ON_PLAYER) {
             CorrectPaintPosition()
         }
@@ -216,12 +216,12 @@ function obsticlePaintPosition() {
 
 // This function draws the paint on the canvas
 function drawPaint() {
-    ctx.fillStyle = GAMECOLOUR["correctPaintColour"];
-    ctx.strokestyle = GAMECOLOUR["correctPaintBorderColour"];
+    ctx.fillStyle = GAME_COLOUR["correctPaintColour"];
+    ctx.strokestyle = GAME_COLOUR["correctPaintBorderColour"];
     ctx.fillRect(correctPaintX, correctPaintY, SQAURE_WIDTH, SQAURE_WIDTH);
     ctx.strokeRect(correctPaintX, correctPaintY, SQAURE_WIDTH, SQAURE_WIDTH);
-    ctx.fillStyle = GAMECOLOUR["obsticlePaintColour"];
-    ctx.strokestyle = GAMECOLOUR["obsticlePaintBorderColour"];
+    ctx.fillStyle = GAME_COLOUR["obsticlePaintColour"];
+    ctx.strokestyle = GAME_COLOUR["obsticlePaintBorderColour"];
     ctx.fillRect(obsticlePaintX, obsticlePaintY, SQAURE_WIDTH, SQAURE_WIDTH);
     ctx.strokeRect(obsticlePaintX, obsticlePaintY, SQAURE_WIDTH, SQAURE_WIDTH);
 }
@@ -235,9 +235,9 @@ function drawPlayer(){
 // This function draws each part of the player
 function drawPlayerPart(part){
     // Set the colour of the player part
-    ctx.fillStyle = GAMECOLOUR["playerColour"];
+    ctx.fillStyle = GAME_COLOUR["playerColour"];
     // Set the border colour of the player part
-    ctx.strokestyle = GAMECOLOUR["playerBorderColour"];
+    ctx.strokestyle = GAME_COLOUR["playerBorderColour"];
     // Draw a "filled" rectangle to represent the player part at the coordinates
     // The part is located
     ctx.fillRect(part.x, part.y, SQAURE_WIDTH, SQAURE_WIDTH);
@@ -256,30 +256,30 @@ function keyDownFunction(event) {
     var keyDown = event.key
 
     // Prevent the player from reversing
-    const GOINGUP = dy === -SQAURE_WIDTH
-    const GOINDOWN = dy === SQAURE_WIDTH
-    const GOINGRIGHT = dx === SQAURE_WIDTH
-    const GOINGLEFT = dx === -SQAURE_WIDTH
+    const GOING_UP = dy === -SQAURE_WIDTH
+    const GOING_DOWN = dy === SQAURE_WIDTH
+    const GOING_RIGHT = dx === SQAURE_WIDTH
+    const GOING_LEFT = dx === -SQAURE_WIDTH
 
     // Change the direction 
-    if ((keyDown === "ArrowLeft" || keyDown === "a") && !GOINGRIGHT) {
+    if ((keyDown === "ArrowLeft" || keyDown === "a") && !GOING_RIGHT) {
         dx = -SQAURE_WIDTH
         dy = 0
         // Prevent the player from changing the direction again before the player changed the direction on the canvas
         changeDirection = false
     }
-    if ((keyDown === "ArrowUp" || keyDown === "w") && !GOINDOWN) {
+    if ((keyDown === "ArrowUp" || keyDown === "w") && !GOING_DOWN) {
         dx = 0
         dy = -SQAURE_WIDTH
         changeDirection = false
     }
-    if ((keyDown === "ArrowRight" || keyDown === "d") && !GOINGLEFT){
+    if ((keyDown === "ArrowRight" || keyDown === "d") && !GOING_LEFT){
         dx = SQAURE_WIDTH
         dy = 0
 
         changeDirection = false
     }
-    if ((keyDown === "ArrowDown" || keyDown === "s") && !GOINGUP) {
+    if ((keyDown === "ArrowDown" || keyDown === "s") && !GOING_UP) {
         dx = 0
         dy = SQAURE_WIDTH
         changeDirection = false
