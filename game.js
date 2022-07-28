@@ -315,7 +315,7 @@ function move_player() {
 
 // This function checks if the player has died
 function has_game_ended() {
-    // Detects if the player hit itself 
+    // For loop that detects if the player hit itself 
     for (let i = 4; i < player.length; i++) {
 		if (player[i].x == player[0].x && player[i].y == player[0].y){
 		    console.log("hit player")
